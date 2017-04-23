@@ -1,5 +1,17 @@
 resultBox = document.getElementById('resultBox');
-
+possibleURLs = {
+	'nytimes.com': ['gray',1],
+	'washingtonpost.com': ['sienna',2],
+	'washingtontimes.com': ['midnightblue',3],
+	'foxnews.com': ['maroon',4],
+	'chicago.suntimes.com': ['orangered',5],
+	'baltimoresun.com': ['purple',6],
+	'ap.org': ['mediumorchid',7],
+	'bbc.com': ['darkslateblue',8],
+	'nbcnews.com': ['darkgreen',9],
+	'cnn.com': ['crimson',10]
+}
+	
 function saveData(data) {
 	data.value.forEach(function(elem){
 		addResult(elem);
@@ -17,37 +29,25 @@ function addResult(elem) {
 	span = document.createElement('span');
 	span.innerHTML = elem.description;
 	d.appendChild(span);
-	if (elem.url.includes('nytimes.com')) d.style.backgroundColor = 'gray';
-	else if (elem.url.includes('washingtonpost.com')) d.style.backgroundColor = 'sienna';
-	else if (elem.url.includes('washingtontimes.com')) d.style.backgroundColor = 'midnightblue';
-	else if (elem.url.includes('foxnews.com')) d.style.backgroundColor = 'maroon';
-	else if (elem.url.includes('chicago.suntimes.com')) d.style.backgroundColor = 'orangered';
-	else if (elem.url.includes('baltimoresun.com')) d.style.backgroundColor = 'purple';
-	else if (elem.url.includes('ap.org')) d.style.backgroundColor = 'mediumorchid';
-	else if (elem.url.includes('bbc.com')) d.style.backgroundColor = 'darkslateblue';
-	else if (elem.url.includes('nbcnews.com')) d.style.backgroundColor = 'darkgreen';
-	else if (elem.url.includes('cnn.com')) d.style.backgroundColor = 'crimson';
+	for (url in possibleURLs) {
+		if (elem.url.includes(url)) d.style.backgroundColor = possibleURLs[url][0];
+	}
 	a.appendChild(d);
 	resultBox.appendChild(a);
 	br = document.createElement('br');
-	resultBox.appendChild(br);;
+	resultBox.appendChild(br);
 }
 
-var re = /srcs=([01]+)&q=(.*)/g;
+var re = /srcs=([0-9]+)&q=(.*)/g;
 match = re.exec(window.location.href);
 srcs = parseInt(match[1]);
 query = match[2];
 websites = [];
-if (srcs%10) websites = websites.concat('nytimes.com');
-if (srcs%100 > 9) websites = websites.concat('washingtonpost.com');
-if (srcs%1000 > 99) websites = websites.concat('washingtontimes.com');
-if (srcs%10000 > 999) websites = websites.concat('foxnews.com');
-if (srcs%100000 > 9999) websites = websites.concat('chicago.suntimes.com');
-if (srcs%1000000 > 99999) websites = websites.concat('baltimoresun.com');
-if (srcs%10000000 > 999999) websites = websites.concat('ap.org');
-if (srcs%100000000 > 9999999) websites = websites.concat('bbc.com');
-if (srcs%1000000000 > 99999999) websites = websites.concat('nbcnews.com');
-if (srcs%10000000000 > 999999999) websites = websites.concat('cnn.com');
+for (url in possibleURLs) {
+	if (srcs%(2**possibleURLs[url][1]) > (2**(possibleURLs[url][1]-1))-1) {
+		websites = websites.concat(url);
+	}
+}
 
 websites.forEach(function(elem,i,arr){arr[i] = 'site:"'+elem+'"';});
 console.log(websites);
