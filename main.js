@@ -17,7 +17,6 @@ $('input[type="checkbox"]').change(function() {
 function getSrcs() {
 	srcs = 0;
 	sources.forEach((e,i)=>{if (document.getElementById(e).checked) srcs += 2**i;})
-	console.log(srcs)
 	return srcs
 }
 

@@ -16,13 +16,11 @@ function saveData(data) {
 	data.value.forEach(function(elem){
 		addResult(elem);
 	})
-	console.log(data);
 }
 
 function addResult(elem) {
 	d = document.createElement('div');
 	d.className = 'result';
-	console.log(elem);
 	a = document.createElement('a');
 	d.innerHTML = elem.name+'<br>';
 	a.href = elem.url;
@@ -50,8 +48,6 @@ for (url in possibleURLs) {
 }
 
 websites.forEach(function(elem,i,arr){arr[i] = 'site:"'+elem+'"';});
-console.log(websites);
-console.log("news/search?q="+query+' AND ('+websites.join(' OR ')+')');
 search();
 	
 function search() {
