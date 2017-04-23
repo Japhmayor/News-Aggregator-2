@@ -1,16 +1,16 @@
 resultBox = document.getElementById('resultBox');
-possibleURLs = {
-	'nytimes.com': ['gray',1],
-	'washingtonpost.com': ['sienna',2],
-	'washingtontimes.com': ['midnightblue',3],
-	'foxnews.com': ['maroon',4],
-	'chicago.suntimes.com': ['orangered',5],
-	'baltimoresun.com': ['purple',6],
-	'ap.org': ['mediumorchid',7],
-	'bbc.com': ['darkslateblue',8],
-	'nbcnews.com': ['darkgreen',9],
-	'cnn.com': ['crimson',10]
-}
+possibleURLs = [
+	['nytimes.com','gray'],
+	['washingtonpost.com','sienna'],
+	['washingtontimes.com','midnightblue'],
+	['foxnews.com','maroon'],
+	['cnn.com','crimson'],
+	['baltimoresun.com','purple'],
+	['ap.org','mediumorchid'],
+	['chicago.suntimes.com','orangered'],
+	['bbc.com','darkslateblue'],
+	['nbcnews.com','darkgreen']
+]
 	
 function saveData(data) {
 	data.value.forEach(function(elem){
@@ -27,9 +27,9 @@ function addResult(elem) {
 	span = document.createElement('span');
 	span.innerHTML = elem.description;
 	d.appendChild(span);
-	for (url in possibleURLs) {
-		if (elem.url.includes(url)) d.style.backgroundColor = possibleURLs[url][0];
-	}
+	possibleURLs.forEach((e,i)=>{
+		if (elem.url.includes(e[0])) d.style.backgroundColor = e[1];
+	});
 	a.appendChild(d);
 	resultBox.appendChild(a);
 	br = document.createElement('br');
@@ -41,12 +41,11 @@ match = re.exec(window.location.href);
 srcs = parseInt(match[1]);
 query = match[2];
 websites = [];
-for (url in possibleURLs) {
-	if (srcs%(2**possibleURLs[url][1]) > (2**(possibleURLs[url][1]-1))-1) {
-		websites = websites.concat(url);
+possibleURLs.forEach((e,i)=>{
+	if (srcs%(2**(i+1))>(2**i)-1) {
+		websites = websites.concat(e[0]);
 	}
-}
-
+});
 websites.forEach(function(elem,i,arr){arr[i] = 'site:"'+elem+'"';});
 search();
 	
