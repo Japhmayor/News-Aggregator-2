@@ -13,36 +13,26 @@ sources = [
 
 r = localStorage.getItem("srcs");
 sources.forEach((e,i)=>{
-	lbl = document.createElement('label');
-	lbl.id = e[0]+'2';
-	input = document.createElement('input');
-	input.type = 'checkbox';
-	input.id = e[0];
-	lbl.appendChild(input);
-	lbl.innerHTML += e[1];
-	document.getElementById('pick').appendChild(lbl);
-	document.getElementById('pick').childNodes[i].childNodes[0].checked = (r%(2**(i+1)))>(2**i)-1;
+	input = $('<input>').prop('id', e[0]).prop('type', 'checkbox')
+		.change(()=>localStorage.setItem("srcs", getSrcs()))
+		.prop('checked', (r%(2**(i+1)))>(2**i)-1);
+	lbl = $('<label>').prop('id', e[0]+'2').text(e[1]).prepend(input).appendTo('#pick');
 });
 
-
-$("#in").keyup(function (e) {
+$("#in").keyup(e => {
     if (e.which == 13) {
 		performSearch();
     }
- });
-
-$('input[type="checkbox"]').change(function() {
-    localStorage.setItem("srcs", getSrcs());
- });
+});
 
 function getSrcs() {
 	srcs = 0;
-	sources.forEach((e,i)=>{if (document.getElementById(e[0]).checked) srcs += 2**i;})
+	sources.forEach((e,i)=>{if ($('#'+e[0]).prop('checked')) srcs += 2**i;})
 	return srcs
 }
 
 function performSearch() {
-	val = document.getElementById('in').value;
+	val = $('#in').val();
 	window.open(window.location.href.split(/index\.html/g)[0]+'search.html?srcs='+getSrcs()+'&q='+val);
 }
 

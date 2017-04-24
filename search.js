@@ -13,27 +13,14 @@ possibleURLs = [
 ]
 	
 function saveData(data) {
-	data.value.forEach(function(elem){
-		addResult(elem);
-	})
+	data.value.forEach(elem => addResult(elem))
 }
 
 function addResult(elem) {
-	d = document.createElement('div');
-	d.className = 'result';
-	a = document.createElement('a');
-	d.innerHTML = elem.name+'<br>';
-	a.href = elem.url;
-	span = document.createElement('span');
-	span.innerHTML = elem.description;
-	d.appendChild(span);
-	possibleURLs.forEach((e,i)=>{
-		if (elem.url.includes(e[0])) d.style.backgroundColor = e[1];
-	});
-	a.appendChild(d);
-	resultBox.appendChild(a);
-	br = document.createElement('br');
-	resultBox.appendChild(br);
+	d = $('<div>').addClass('result').html(elem.name+'<br>');
+	span = $('<span>').html(elem.description).appendTo(d);
+	possibleURLs.forEach((e,i)=>{ if (elem.url.includes(e[0])) d.css('background-color',e[1]); });
+	$('<a>').prop('href',elem.url).append(d).append($('<br>')).appendTo(resultBox);
 }
 
 var re = /srcs=([0-9]+)&q=(.*)/g;
