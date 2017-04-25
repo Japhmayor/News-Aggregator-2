@@ -19,7 +19,7 @@ function saveData(data) {
 function addResult(elem) {
 	d = $('<div>').addClass('result').html(elem.name+'<br>');
 	span = $('<span>').html(elem.description).appendTo(d);
-	possibleURLs.forEach((e,i)=>{ if (elem.url.includes(e[0])) d.css('background-color',e[1]); });
+	possibleURLs.map(e =>{ if (elem.url.includes(e[0])) d.css('background-color',e[1]); });
 	$('<a>').prop('href',elem.url).append(d).append($('<br>')).appendTo(resultBox);
 }
 
@@ -30,10 +30,9 @@ query = match[2];
 websites = [];
 possibleURLs.forEach((e,i)=>{
 	if (srcs%(2**(i+1))>(2**i)-1) {
-		websites = websites.concat(e[0]);
+		websites.push('site:"'+e[0]+'"');
 	}
 });
-websites.forEach((elem,i,arr)=>arr[i] = 'site:"'+elem+'"');
 search();
 	
 function search() {
