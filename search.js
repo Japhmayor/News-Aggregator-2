@@ -33,7 +33,7 @@ possibleURLs.forEach((e,i)=>{
 		websites = websites.concat(e[0]);
 	}
 });
-websites.forEach(function(elem,i,arr){arr[i] = 'site:"'+elem+'"';});
+websites.forEach((elem,i,arr)=>arr[i] = 'site:"'+elem+'"');
 search();
 	
 function search() {
@@ -42,9 +42,9 @@ function search() {
 	  success: saveData,
 	  type: "GET",
 	  dataType: 'json',
-	  beforeSend: function(xhrObj){
-		xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","d398752ad064467c819a9e531beb6ad8");
-		}
+	  headers: {
+		"Ocp-Apim-Subscription-Key":"d398752ad064467c819a9e531beb6ad8"
+	  }
 	});
 }
 
