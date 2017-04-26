@@ -13,10 +13,19 @@ h1 {
 }
 
 #pick {
-	column-count: 2;
-	column-width: 50%;
+	column-count: 1;
+	column-width: 100%;
 	text-align: center;
 	break-inside: avoid-column;
+}
+
+@media all and (min-width: 65em) {
+	#pick {
+		column-count: 2;
+		column-width: 50%;
+		text-align: center;
+		break-inside: avoid-column;
+	}
 }
 
 label {

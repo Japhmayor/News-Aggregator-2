@@ -25,14 +25,5 @@ $("#in").keyup(e => {
     }
 });
 
-function getSrcs() {
-	srcs = 0;
-	$('#pick input').each((i,e) => {if (e.checked) srcs += 2**i;})
-	return srcs
-}
-
-function performSearch() {
-	val = $('#in').val();
-	window.open(window.location.href.split(/index\.html/g)[0]+'search.html?srcs='+getSrcs()+'&q='+val);
-}
-
+getSrcs = () => Array.from($('#pick input')).reduce((a,e,i) => a+(e.checked?2**i:0),0);
+performSearch = () => window.open(window.location.href.split(/index\.html/g)[0]+'search.html?srcs='+getSrcs()+'&q='+$('#in').val());

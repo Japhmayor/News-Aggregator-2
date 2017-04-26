@@ -1,4 +1,4 @@
-resultBox = document.getElementById('resultBox');
+resultBox = $('#resultBox').get(0);
 possibleURLs = [
 	['nytimes.com','gray'],
 	['washingtonpost.com','sienna'],
@@ -12,9 +12,7 @@ possibleURLs = [
 	['nbcnews.com','darkgreen']
 ]
 	
-function saveData(data) {
-	data.value.forEach(elem => addResult(elem))
-}
+saveData = data => data.value.forEach(elem => addResult(elem));
 
 function addResult(elem) {
 	d = $('<div>').addClass('result').html(elem.name+'<br>');
